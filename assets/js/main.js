@@ -251,4 +251,41 @@
    */
   new PureCounter();
 
+  fetch('http://localhost:3000/depoimentos') //req HTTP
+  .then(depoimentos => depoimentos.json())  //convert json
+  .then(depoimentos =>{ //funcao manipular os dados
+
+
+    let containerDosDepoimentos = select('.swiper-wrapper'); //elemento 
+    
+    for (let i = 0; i < depoimentos.length; i++){  //itera
+      containerDosDepoimentos.appendChild(criarDepoimento(depoimentos[i])); 
+      console.log(criarDepoimento(depoimentos[i]))
+    }
+  })
+
+  function criarDepoimento(depoimento){
+    var swiper = document.createElement('div'); //cria div
+    swiper.classList.add("swiper-slide");
+
+
+    //modelo texto
+    var testimonialsItem = `<div class="swiper-slide">; 
+    <div class="testimonial-item">
+      <p>
+        <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+        ${depoimento.descricao}
+        <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+      </p>
+      <img src="${depoimento.foto}" class="testimonial-img" alt="">
+      <h3>${depoimento.nome}</h3>
+      <h4>${depoimento.empresa}</h4>
+    </div>
+  </div>`
+    
+//atribuido ao conteudo interno
+    swiper.innerHTML = testimonialsItem;
+    return swiper
+  }
+
 })()
